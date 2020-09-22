@@ -11,4 +11,3 @@ class Objeto_Set():
 
     def getnombre(self):
         return self.nameSet
-
