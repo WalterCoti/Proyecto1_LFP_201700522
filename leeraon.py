@@ -63,7 +63,7 @@ def leercontenido(contenido,id_set):
 
         elif estado == 5:
             if contenido[pos] == "=" :
-                print( contenido[pos] +" <-- "+ token.get(contenido[pos]))
+               # print( contenido[pos] +" <-- "+ token.get(contenido[pos]))
                 estado = 6
         elif estado == 6:     #estado 6
             caracter_Sig = contenido[(pos+1)]
@@ -100,9 +100,9 @@ def leercontenido(contenido,id_set):
                 estado = 10
                 elemento = dict(zip(list_llaves , list_valores))
                 for i in range(len(var_global.arregloSEts)):            #buscar en el arreglo de sets
-                    set_buscar = obj_set[i]                             #igualo el objeto encontrado 
-                    if set_buscar.getnombre == id_set:                  #veo si es el set correcto
-                        set_buscar.setElementList(elemento)             #agrego la informacion
+                    nuevos_datos = var_global.arregloSEts[i]
+                    if nuevos_datos.getnombre() == id_set:     #veo si es el set correcto
+                        nuevos_datos.setElementList(elemento)             #agrego la informacion
                         break                                           #detengo el ciclo
                     else:
                         continue                                        #si no es el set continua el ciclo

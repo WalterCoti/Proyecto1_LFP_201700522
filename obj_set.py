@@ -7,7 +7,7 @@ class Objeto_Set():
         self.list_SetElement.append(objetoesto)
 
     def getlist(self):
-        return self.list_ESet
+        return self.list_SetElement
 
     def getnombre(self):
         return self.nameSet
