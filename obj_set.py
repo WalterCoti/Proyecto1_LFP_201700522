@@ -5,6 +5,7 @@ class Objeto_Set():
 
     def setElementList(self, objetoesto):
         self.list_SetElement.append(objetoesto)
+    
 
     def getlist(self):
         return self.list_SetElement

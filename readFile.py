@@ -5,9 +5,10 @@ def openFile(nameFile):
     #print(my_path)
     path = os.path.join(my_path, nameFile)
     #print (path)
-    
-    with open (path, 'r+') as data: 
-        contenido = data.read()
-        return contenido
-
+    try:
+        with open (path, 'r+') as data: 
+            contenido = data.read()
+            return contenido
+    except:
+        print("no se encontro el archivo -> " + nameFile)
 

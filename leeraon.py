@@ -27,7 +27,6 @@ def leercontenido(contenido,id_set):
     numero = ""
     boleano = ""
     texto = ""
-    encontrocomilla = False
     for pos in range(len(contenido)):
         
         if estado == 0:
@@ -50,7 +49,6 @@ def leercontenido(contenido,id_set):
             if caracter_Sig == "]":
                 tmp_string = tmp_string + contenido[pos]
                 list_llaves.append(tmp_string)
-               # print(tmp_string + " <-- "+ token.get("texto"))
                 tmp_string = ""
                 estado = 4  
             elif contenido[pos].isascii():
@@ -77,7 +75,6 @@ def leercontenido(contenido,id_set):
                     elif caracter_Sig == ",":
                         texto = texto + contenido[pos]
                        # print(texto + " <-- "+ token.get("numero"))
-                        encontrocomilla = False
                         list_valores.append(texto)
                         texto = ""
                         estado = 7
@@ -85,7 +82,6 @@ def leercontenido(contenido,id_set):
                         texto = texto + contenido[pos]
                        # print(texto + " <-- "+ token.get("texto"))
                         list_valores.append(texto)
-                        encontrocomilla = False
                         texto = ""
                         estado = 7
                     else:
