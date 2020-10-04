@@ -6,7 +6,7 @@ def openFile(nameFile):
     path = os.path.join(my_path, nameFile)
     #print (path)
     try:
-        with open (path, 'r+') as data: 
+        with open (nameFile, 'r+') as data: 
             contenido = data.read()
             return contenido
     except:

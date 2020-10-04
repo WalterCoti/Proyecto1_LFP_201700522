@@ -3,6 +3,8 @@ import obj_set
 import readFile
 import leeraon
 import var_global
+import report
+import seleccionar
 from colorama import Fore, Back, Style
 
 
@@ -20,6 +22,7 @@ def main():
 
 
 def cadena_Entrada(cadenita):
+    condicion_dos = False
     estado = 0
     texto = ""
     for pos in range(len(cadenita)):
@@ -27,35 +30,48 @@ def cadena_Entrada(cadenita):
             if cadenita[pos].isspace():
                 if texto.upper() == "CREATE":
                     estado = 1                      #terminado falta validar duplicados
+                    var_global.lst_tokens.append(texto)
                     texto = ""
                 elif texto.upper() == "LOAD":       #terminado ajustes, validaciones
                     estado = 3
+                    var_global.lst_tokens.append(texto)
                     texto = ""
                 elif texto.upper() =="USE":         #terminado
                     estado = 7
+                    var_global.lst_tokens.append(texto)
                     texto = ""
                 elif texto.upper() == "SELECT":
-                    estado = 1                      #falta aun
+                    estado = 20
+                    var_global.lst_tokens.append(texto)
+                    texto = ""                      #falta aun
                 elif texto.upper() == "LIST":
                     estado = 9
+                    var_global.lst_tokens.append(texto)
                     texto = ""
                 elif texto.upper() == "PRINT":      #terminado
                     estado = 10
+                    var_global.lst_tokens.append(texto)
                     texto = ""
                 elif texto.upper() == "MAX":    #terminado
                     estado = 12
+                    var_global.lst_tokens.append(texto)
                     texto = ""
                 elif texto.upper() == "MIN":    #terminado
                     estado = 13
+                    var_global.lst_tokens.append(texto)
                     texto = ""
                 elif texto.upper() == "SUM":    #terminado
                     estado = 15
+                    var_global.lst_tokens.append(texto)
                     texto = ""
                 elif texto.upper() == "COUNT":
                     estado = 16
+                    var_global.lst_tokens.append(texto)
                     texto = ""
                 elif texto.upper() == "REPORT":
-                    estado = 1
+                    estado = 17
+                    var_global.lst_tokens.append(texto)
+                    texto = ""
                 elif texto.upper() == "SCRIPT": #terminado
                     estado = 14
                     texto = ""
@@ -68,6 +84,7 @@ def cadena_Entrada(cadenita):
             if  cadenita[pos].isspace():
                 if texto.upper() == "SET":
                     estado = 2
+                    var_global.lst_tokens.append(texto)
                     texto = ""
                 else:
                     texto = ""
@@ -93,6 +110,7 @@ def cadena_Entrada(cadenita):
             if  cadenita[pos].isspace():
                 if texto.upper() == "INTO":
                     estado = 4
+                    var_global.lst_tokens.append(texto)
                     texto = ""
                 else:
                     texto = ""
@@ -124,9 +142,10 @@ def cadena_Entrada(cadenita):
                 continue
             else:   
                 if cadenita[pos] == ",":
+                    var_global.lst_tokens.append(",")
                     verqeupaso = readFile.openFile(texto)
                     leeraon.leercontenido(readFile.openFile(texto),set_work)
-                    print("Archivo -> " + texto + "cargado a memoria")
+                    print("Archivo -> " + texto + " <-  cargado a memoria")
 
                     texto = ""
                   
@@ -145,6 +164,7 @@ def cadena_Entrada(cadenita):
             if  cadenita[pos].isspace():
                 if texto.upper() == "SET":
                     estado = 8
+                    var_global.lst_tokens.append(texto)
                     texto = ""
                 else:
                     texto = ""
@@ -179,6 +199,7 @@ def cadena_Entrada(cadenita):
             if  pos == (len(cadenita)-1):
                 texto = texto + cadenita[pos]
                 if texto.upper() == "ATTRIBUTES":
+                    var_global.lst_tokens.append(texto)
                     for i in range(len(var_global.arregloSEts)):
                         objeto_set = var_global.arregloSEts[i]
                         if objeto_set.getnombre() == var_global.trabajar_set:
@@ -199,6 +220,7 @@ def cadena_Entrada(cadenita):
             if  cadenita[pos].isspace():
                 if texto.upper() == "IN":
                     estado = 11
+                    var_global.lst_tokens.append(texto)
                     texto = ""
                 else:
                     texto = ""
@@ -210,16 +232,22 @@ def cadena_Entrada(cadenita):
             if  pos == (len(cadenita)-1):
                 texto = texto + cadenita[pos]
                 if texto.upper() ==  "BLUE":
+                    var_global.lst_tokens.append(texto.upper())
                     print(Fore.BLUE)
                 elif texto.upper() ==  "RED":
+                    var_global.lst_tokens.append(texto.upper())
                     print(Fore.RED)
                 elif texto.upper() ==  "GREEN":
+                    var_global.lst_tokens.append(texto.upper())
                     print(Fore.GREEN)
                 elif texto.upper() ==  "YELLOW":
+                    var_global.lst_tokens.append(texto.upper())
                     print(Fore.YELLOW)
                 elif texto.upper() ==  "ORANGE":
+                    var_global.lst_tokens.append(texto.upper())
                     print(Fore.RED)
                 elif texto.upper() ==  "PINK":
+                    var_global.lst_tokens.append(texto.upper())
                     print(Fore.MAGENTA)
                 else:
                     print("El color que se a seleccionado no existe")
@@ -293,12 +321,13 @@ def cadena_Entrada(cadenita):
                     texto = ""
                 else:
                     texto = texto + cadenita[pos]
-#--------------------------------------------COMANDO SUM------------------------------------------------
+#-----------------------------------------COMANDO SUM------------------------------------------------
         elif estado == 15:
             if cadenita[pos].isspace():
                 continue
             else:   
                 if cadenita[pos] == ",":
+                    var_global.lst_tokens.append(",")
                     var_global.lst_atributos.append(texto)
                     texto = ""
                 elif cadenita[pos] == "*":
@@ -320,12 +349,13 @@ def cadena_Entrada(cadenita):
                     suma()
                 else:
                     texto = texto + cadenita[pos]
-#----------------------------------------COMANDO COUNT--------------------------------------------
+#-----------------------------------------COMANDO COUNT--------------------------------------------
         elif estado == 16:
             if cadenita[pos].isspace():
                 continue
             else:   
                 if cadenita[pos] == ",":
+                    var_global.lst_tokens.append(",")
                     var_global.lst_atributos.append(texto)
                     texto = ""
                 elif cadenita[pos] == "*":
@@ -347,19 +377,160 @@ def cadena_Entrada(cadenita):
                     contar()
                 else:
                     texto = texto + cadenita[pos]
-#------------------------------------------COMANDO REPORT TO-----------------------------------------
+#-----------------------------------------COMANDO REPORT TOKENS/TO-----------------------------------------
         elif estado == 17:
-            pass
+            if  pos == (len(cadenita)-1):
+                texto = texto + cadenita[pos]
+                if texto.upper() == "TOKENS":
+                    var_global.lst_tokens.append(texto)
+                    report.reportTokens(var_global.trabajar_set)
+                    texto = ""
+            elif cadenita[pos].isspace():
+                if texto.upper() == "TO":
+                    var_global.lst_tokens.append(texto)
+                    estado = 18
+                    texto = ""
+            else:
+                texto = texto + cadenita[pos]
+
         elif estado == 18:
-            pass
+            if  cadenita[pos].isspace():
+                var_global.trabajar_set = texto
+                estado = 19
+                texto = ""
+            else:
+                texto = texto + cadenita[pos]
         elif estado == 19:
-            pass
+            if  pos == (len(cadenita)-1):
+                texto = texto + cadenita[pos]
+                cadena_Entrada(texto)
+                texto = ""
+            else:
+                texto = texto + cadenita[pos]
+#-----------------------------------------COMANDO SELECT------------------------------------------
+        #SELECT * WHERE COND1 AND/OR/XOR COND2
+        #SELECT * WHERE COND1
+        #SELECT * WHERE *
+        #SELECT *
+        #SELECT atrib1, atrib2 WHERE COND1 AND/OR/XOR COND2
+        #SELECT atrib1, atrib2 WHERE COND1
+        #SELECT atrib1, atrib2 WHERE *
+
+        #condiciones
+        # nameatrib  =|!=|<|>|<=|>=  xxxxxxxx
         elif estado == 20:
-            pass
+            if  pos == (len(cadenita)-1):
+                if cadenita[pos] == "*":
+                    select_all_atrib()
+            elif cadenita[pos].isspace():
+                if cadenita[pos-1] == ",":
+                    continue
+                elif texto == "*":
+                    select_all_atrib()
+                    texto = ""
+                    estado = 21
+                else:
+                    var_global.lst_atributos.append(texto)
+                    texto = ""
+                    estado = 21
+            else:
+                if cadenita[pos] == ",":
+                    var_global.lst_atributos.append(texto)
+                    var_global.lst_tokens.append(",")
+                    texto = ""
+                else:
+                    texto = texto + cadenita[pos]
         elif estado == 21:
-            pass
+            if cadenita[pos].isspace():
+                if texto.upper() == "WHERE":
+                    estado = 22
+                    var_global.lst_tokens.append(texto.upper())
+                    texto = ""
+            else:
+                texto = texto + cadenita[pos]
         elif estado == 22:
+            if  pos == (len(cadenita)-1):
+                if cadenita[pos] == "*":
+                    for set_memoria in var_global.arregloSEts:
+                        if set_memoria.getnombre() == var_global.trabajar_set:
+                            for elemento in set_memoria.getlist():
+                                var_global.lista_res_final.append(elemento)  
+                                          #si es * son todos los elementos del set
+                    seleccionar.imprimir_resultado()
+            elif cadenita[pos].isspace():
+                var_global.key_atributo.append(texto)
+                estado = 23
+                texto =""
+            else:
+                texto = texto + cadenita[pos]
+        elif estado == 23:
+            if cadenita[pos].isspace():
+                estado = 24
+                var_global.operator_cond.append(texto)
+                var_global.lst_tokens.append(texto.upper())
+                texto = ""
+            else:
+                texto = texto + cadenita[pos]    
+        elif estado == 24:
+            if  pos == (len(cadenita)-1):
+                texto = texto + cadenita[pos]
+                var_global.value_atributo.append(texto)
+                if condicion_dos:
+                    seleccionar.buscarCondicion(var_global.key_atributo[0],var_global.operator_cond[0],var_global.value_atributo[0],var_global.lst_primeraCond)
+                    seleccionar.buscarCondicion(var_global.key_atributo[1],var_global.operator_cond[1],var_global.value_atributo[1],var_global.lst_segundaCond)
+                    seleccionar.buscarOperador();
+                else:
+                    seleccionar.buscarCondicion(var_global.key_atributo[0],var_global.operator_cond[0],var_global.value_atributo[0],var_global.lst_primeraCond)
+                    seleccionar.buscarOperador();
+                texto =""
+            elif cadenita[pos].isspace():
+                var_global.value_atributo.append(texto)
+                condicion_dos = True
+                texto =""
+                estado = 27
+            elif cadenita[pos]== "\"":
+                var_global.lst_tokens.append("\"")
+                estado = 25
+            else:
+                texto = texto + cadenita[pos]
+        elif estado == 25:
+            if  pos == (len(cadenita)-1):
+                X = cadenita[pos]
+                if  cadenita[pos]=="\"":
+                    var_global.value_atributo.append(texto)
+                    var_global.lst_tokens.append("\"")
+                    texto =""
+                    if condicion_dos:
+                        seleccionar.buscarCondicion(var_global.key_atributo[0],var_global.operator_cond[0],var_global.value_atributo[0],var_global.lst_primeraCond)
+                        seleccionar.buscarCondicion(var_global.key_atributo[1],var_global.operator_cond[1],var_global.value_atributo[1],var_global.lst_segundaCond)
+                        seleccionar.buscarOperador();
+                    else:
+                        seleccionar.buscarCondicion(var_global.key_atributo[0],var_global.operator_cond[0],var_global.value_atributo[0],var_global.lst_primeraCond)
+                        seleccionar.buscarOperador();
+            elif cadenita[pos]=="\"":
+                    var_global.value_atributo.append(texto)
+                    var_global.lst_tokens.append("\"")
+                    texto =""
+                    condicion_dos = True
+                    estado = 26
+            else:
+                texto = texto + cadenita[pos]
+        elif estado == 26:
+            if cadenita[pos].isspace():
+                estado = 27
+        elif estado == 27:
+            if cadenita[pos].isspace():
+                var_global.operator = texto
+                var_global.lst_tokens.append(texto)
+                texto=""         
+                estado = 22
+            else:
+                texto = texto + cadenita[pos]
+#-----------------------------------------COMANDO REGEX------------------------------
+        elif estado == 28:
             pass
+
+
     
 def script_go(direccion):
     script_comando = ""
@@ -371,11 +542,12 @@ def script_go(direccion):
             else:
                 if scrit_contenido[po] == ";":
                     cadena_Entrada(script_comando)
+                    var_global.lst_tokens.append(";")
                     script_comando = ""
                 else:
                     script_comando = script_comando + scrit_contenido[po]
     except:
-        print("Error al intentar leer el archivo")
+        print("Error al intentar leer el archivo")  # aqui me da el errror no se porque
 
 def contar():
     for atributo_bus in var_global.lst_atributos:
@@ -409,7 +581,7 @@ def suma():
                 for datos_element in lista_datos:
                     value_atrib = datos_element.get(atributo_bus)
                     try:
-                        if float(value_atrib).as_integer_ratio():
+                        
                             var_global.lst_sum.append(value_atrib)
                     except:
                         continue
@@ -426,6 +598,17 @@ def suma():
            print("Atributo de tipo string")
     print("---------------------------------------------------")
     var_global.lst_atributos.clear()
-                    
+
+def select_all_atrib():
+    for i in range(len(var_global.arregloSEts)):
+        objeto_set = var_global.arregloSEts[i]
+        if objeto_set.getnombre() == var_global.trabajar_set:
+            lista_elementos = objeto_set.getlist()
+            elemento_ver = lista_elementos[0]
+            for atrib in elemento_ver.keys():
+                var_global.lst_atributos.append(atrib)  
+        else:
+            continue
+
 
 main()
