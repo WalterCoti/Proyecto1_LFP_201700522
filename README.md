@@ -58,3 +58,74 @@ Ademas de poder combinarlo con los Operadores:
 ```bash
 >>SELECT * WHERE marca = “Mazda” AND año < 1996
 ```
+
+## - LIST ATTRIBUTES
+Este comando permite listar los atributos que componen a cada registro del set.
+
+```bash
+>>LIST ATTRIBUTTES
+```
+## - PRINT IN 
+Este comando permite al usuario elegir el color en el que serán presentados los
+resultados en la línea de comandos. 
+Los valores a elegir serán:
+- BLUE, 
+- RED, 
+- GREEN,
+- YELLOW, 
+- ORANGE y 
+- PINK. 
+
+Ejemplo:
+
+
+```bash
+>>PRINT IN BLUE
+```
+
+
+
+## - MAX | MIN 
+Permiten encontrar el valor máximo o el valor mínimo que se encuentre en el atributo de uno de los registros del conjunto en memoria. En caso de seleccionar el valor máximo de un valor de tipo String la comparación será realizada de forma lexicográfica. 
+Ejemplos:
+```bash
+>>MAX edad
+>>MIN precio
+```
+## - SUM
+Permite obtener la suma de todos los valores de un atributo especificado en el comando. Este comando solamente se utilizará sobre valores de tipo numérico, no se realizarán sumas sobre valores de tipo cadena o booleanos. En caso de seleccionarse varios atributos deberá reportar cada atributo con su respectiva suma, en caso de que el atributo tenga valor null se ignorará. El comando SUM acepta el uso del operador *.
+Ejemplos:
+```bash
+>>SUM edad, promedio, faltas
+```
+
+## - COUNT 
+Permite contar el número de registros que se han cargado a memoria. En caso de que alguno de los atributos tenga valor null se ignorará. El comando COUNT permite el uso del operador *.
+Ejemplos:
+```bash
+>>COUNT edad, promedio, faltas
+```
+
+## - REPORT TO < id > < comando >
+Este comando permite crear un reporte en html a partir de cualquier otro comando
+de análisis o selección. El reporte debe ser agradable a la vista y fácil de leer. El id
+define el nombre del archivo sobre el que se crea el reporte.
+
+```bash
+REPORT TO reporte1 COUNT *
+REPORT TO reporte2 SUM *
+REPORT TO reporte3 SELECT * WHERE edad != 44
+```
+
+## - SCRIPT 
+Este comando permite cargar scripts con extensión .siql que contienen series de instrucciones y comandos SimpleQL, esto con el objetivo de que el usuario no tenga que escribir uno por uno los comandos que se desee ejecutar. Algunos lineamientos para este tipo de archivo se dan más adelante.
+```bash
+>>SCRIPT C://User/Descktop/carga_masiva.siql
+>>SCRIPT carga_masiva.siql
+```
+## - REPORT TOKENS
+Este comando crea un reporte en html que muestra una lista de todos los lexemas encontrados por el AFD, mostrando también a cual token pertenece
+el lexema y una breve descripción del mismo.
+```bash
+>>REPORT TOKENS
+```
